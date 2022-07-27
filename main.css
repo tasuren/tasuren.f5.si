@@ -45,14 +45,16 @@ code {
 a { font-weight: bold; }
 a:link { color: #38a1db; }
 a:visited { color: #8491c3; }
+nav ul a:visited { color: #38a1db; }
 
 /* レスポンシブ */
 @media screen and (max-width: 959px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
-  .title { font-size: 9.5vw; }
-  nav ul { font-size: 6vw; }
-  .content { font-size: 4vw; }
+  .title { font-size: 11vw; }
+  nav ul { font-size: 7.5vw; }
+  .content { font-size: 5vw; }
   .background-for-text { margin: 1vh; padding: 1vh 3vw; }
+
 
   .pc-only { display: none; }
 }
