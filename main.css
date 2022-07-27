@@ -1,0 +1,80 @@
+/* Main CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&family=Yomogi&display=swap');
+
+* { padding-inline-start: 0; }
+h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
+
+.background-for-text {
+  background-color: rgba(13, 0, 21, 0.55);
+  margin: 0 2%;
+  border-radius: 15px;
+  padding: 0.8vw 1.5vw;
+}
+
+body {
+  padding: 0; margin: 0;
+  font-family: 'Yomogi', cursive;
+  color: #88b2c1;
+  background-color: rgba(12, 16, 30);
+  background-size: 10%;
+  list-style-position: inside;
+}
+ul { padding-inline-start: 1%; }
+
+.container { margin: 3%; }
+
+/* メニュー */
+.title { font-weight: bold; font-size: 50px; }
+nav { padding: 0.2%; }
+nav ul { margin: 1%; list-style: none; font-size: 3vw; }
+.text-right { text-align: right; }
+
+/* メイン */
+.content { font-size: 2vw; }
+code {
+  /* ソースコードのハイライトの背景 */
+  background-color: #0f2350;
+  border-radius: 0.4vh;
+  padding: 0 0.3vw;
+  font-family: 'Kosugi', sans-serif;
+  font-family: 'Roboto Mono', monospace;
+  font-family: 'Source Code Pro', monospace;
+}
+
+a { font-weight: bold; }
+a:link { color: #38a1db; }
+a:visited { color: #8491c3; }
+
+/* レスポンシブ */
+@media screen and (max-width: 959px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  .title { font-size: 9.5vw; }
+  nav ul { font-size: 6vw; }
+  .content { font-size: 4vw; }
+  .background-for-text { margin: 1vh; padding: 1vh 3vw; }
+
+  .pc-only { display: none; }
+}
+
+@media screen and (min-width: 960px) {
+  /* タブレット,PC向け */
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .title { font-size: 3.35vw; }
+  nav { width: 30%; }
+  nav ul { font-size: 3vw; }
+  .content { width: 70%; font-size: 1.8vw; }
+
+  .sp-only { display: none; }
+}
+
+@media screen and (min-width: 1679px) {
+  /* PC向け */
+  .title { font-size: 2.35vw; }
+  nav { width: 25%; }
+  nav ul { font-size: 2vw; }
+  .content { width: 75%; font-size: 1.35vw; }
+}

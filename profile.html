@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja" theme="dark">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>tasurenのプロフィール</title>
+    <meta name="description" content="tasurenについての情報が記されているページです。">
+    <meta name="author" content="tasuren">
+    <meta name="theme-color" content="#0d0015">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
+    <!-- Assets -->
+    <link rel="stylesheet" href="/main.css">
+    <script src="/main.js"></script>
+    <script>
+      // 外部リンクを`target=_blank`にして新しいタブで開くようにする。
+      window.onload = function () {
+        let url;
+        for (element of document.getElementsByTagName("a")) {
+          url = element.getAttribute("href");
+          if (!url.startsWith(window.location.origin) && url.startsWith("http"))
+            element.setAttribute("target", "_blank");
+        };
+      };
+    </script>
+    <!-- Other -->
+    
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="background-for-text">
+          <div class="title">tasurenの部屋</div>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile.html">Profile</a></li>
+            <li><a href="/downloads">Downloads</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="content"><div class="background-for-text">
+<h1>Profile</h1>
+
+<p>こちらは、tasurenのプロフィールです。</p>
+
+<ul>
+<li>職業：学生</li>
+<li>好物：パソコン、女の子、ゲーム、ケーキ</li>
+<li>趣味：プログラミング、女の子観察</li>
+<li>メールアドレス：tasuren@aol.com</li>
+<li>Discord: <code>tasuren#5161</code></li>
+</ul>
+
+<p>なんとポートフォリオがあるんです！<br>
+ポートフォリオは<a href="https://tasuren.github.io/">こちら</a>からどうぞ。</p>
+</div></div>
+    </div>
+  </body>
+</html>
