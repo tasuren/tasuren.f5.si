@@ -95,7 +95,7 @@ nav ul a:visited { color: #38a1db; }
   .content { width: 75%; font-size: 1.55vw; }
 
   code { padding: 0.1vh 0.35vw; }
-  pre code.hljs { font-size: 1.35vw; }
+  pre code.hljs { padding: 1.5vw; font-size: 1.35vw; }
 }
 
 @media screen and (min-width: 1679px) {
@@ -107,5 +107,5 @@ nav ul a:visited { color: #38a1db; }
   .content { width: 80%; font-size: 1vw; }
 
   code { padding: 0 0.3vw; margin: 0.1vw; }
-  pre code.hljs { padding: 0.8vh; font-size: 0.8vw; }
+  pre code.hljs { padding: 1.5vh; font-size: 0.8vw; }
 }
