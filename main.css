@@ -40,7 +40,8 @@ code {
   /* ソースコードのハイライトの背景 */
   background-color: #0f2350;
   border-radius: 0.4vh;
-  padding: 0 0.5vw;
+  padding: 0.1vh 0.5vw;
+  margin: 0.2vw;
   font-family: 'Source Code Pro', monospace;
 }
 
@@ -66,7 +67,8 @@ nav ul a:visited { color: #38a1db; }
   nav ul { font-size: 6vw; }
   .content { font-size: 4.4vw; }
   .background-for-text { margin: 0.4vh 0; padding: 1vh 2vw; }
-  pre code.hljs { padding: 1vh 2vw; font-size: 3.55vw; }
+  code { margin: 0.5vw; }
+  pre code.hljs { padding: 0.9vh 2vw; font-size: 3.55vw; }
 
   #last-updated { font-size: 4vw; }
   #back { margin-top: auto; margin-bottom: auto; }
@@ -80,17 +82,20 @@ nav ul a:visited { color: #38a1db; }
     display: flex;
     justify-content: space-between;
   }
-  pre code.hljs { padding: 1vh 2vw; font-size: 1.3vw; }
+  pre code.hljs { padding: 1vh 0.8vw; }
 
   .sp-only { display: none; }
 }
 
 @media screen and (min-width: 960px) and (max-width: 1678px) {
   /* タブレット向け */
-  #title { font-size: 2.75vw; }
+  #title { font-size: 2.7vw; }
   nav { width: 25%; }
   nav ul { font-size: 2vw; }
   .content { width: 75%; font-size: 1.55vw; }
+
+  code { padding: 0.1vh 0.35vw; }
+  pre code.hljs { font-size: 1.35vw; }
 }
 
 @media screen and (min-width: 1679px) {
@@ -101,5 +106,6 @@ nav ul a:visited { color: #38a1db; }
   nav ul { font-size: 1.4vw; }
   .content { width: 80%; font-size: 1vw; }
 
-  pre code.hljs { padding: 1vh 2vw; font-size: 0.8vw; }
+  code { padding: 0 0.3vw; margin: 0.1vw; }
+  pre code.hljs { padding: 0.8vh; font-size: 0.8vw; }
 }
