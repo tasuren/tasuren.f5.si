@@ -106,6 +106,6 @@ nav ul a:visited { color: #38a1db; }
   nav ul { font-size: 1.4vw; }
   .content { width: 80%; font-size: 1vw; }
 
-  code { padding: 0 0.3vw; margin: 0.8vw; }
+  code { padding: 0 0.3vw; margin: 0.2vw; }
   pre code.hljs { padding: 0.8vh; font-size: 0.8vw; }
 }
