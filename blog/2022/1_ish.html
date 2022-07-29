@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja" theme="dark">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>iSHのPythonで一部ライブラリを入れられない問題</title>
+    <meta name="description" content="tasurenのブログの方針を軽くまとめてみた。">
+    <meta name="author" content="tasuren">
+    <meta name="theme-color" content="#0d0015">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
+    <!-- Assets -->
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/phd.min.css" integrity="sha512-VtA+ZaSvst0+aJz2Of6AODkGr/wseyNc4u/sq7QP4u187k86dCnjXv6G4L6GOAzQSYyHZ3/aeyPIpukjmLMRiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="/main.css?last_updated=1659070232.093621">
+    <script src="/main.js"></script>
+    <script>
+      // 外部リンクを`target=_blank`にして新しいタブで開くようにする。
+      window.onload = function () {
+        let url;
+        for (element of document.getElementsByTagName("a")) {
+          url = element.getAttribute("href");
+          if (!url.startsWith(window.location.origin) && url.startsWith("http"))
+            element.setAttribute("target", "_blank");
+        };
+      };
+    </script>
+    <!-- Other -->
+    
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="background-for-text">
+          <div id="title">tasurenの部屋</div>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile.html">Profile</a></li>
+            <li><a href="/downloads">Downloads</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="content"><div class="background-for-text"><div class="frame"><div class="left" id="back"><a href="/blog/2022">戻る</a></div><div class="right" id="last-updated"><em>Last updated:<br class="sp-only"> 2022-07-29 04:50:12</em></div></div><hr>
+<h1>iSHのPythonで一部ライブラリを入れられない問題</h1><p>これは、iSHにてyarlやujson等のライブラリをインストールする際に、エラーが発生してインストールできない時の対処法をまとめたものです。<br>
+他のLinuxのディストリビューションでも起こり得ることだと思います。<br>
+このエラーは必要なライブラリが不足してることにより発生しています。</p>
+
+<h2>python.hがない</h2>
+
+<p>エラー文の下の方に<code>&lt;python.h&gt;</code>とある場合です。<br>
+この場合はPythonの開発ライブラリがない(または見つからない状態)から発生しています。<br>
+その開発ライブラリは、大抵<code>python-dev</code>という名前でパッケージマネージャーからインストールが可能です。<br>
+iSHの場合は<code>apk add python3-dev</code>でインストールが可能です。</p>
+
+<h2>limits.hがない</h2>
+
+<p>エラー文の下の方に<code>&lt;limits.h&gt;</code>とある場合です。<br>
+この場合はmuslというライブラリがインストールされていないまたは見つからない状態です。<br>
+iSHでは<code>apk add musl-dev</code>でインストールができます。</p>
+
+<h2>エラー文の例文</h2>
+
+<p>これはGoogleにひっかかりやすくするためのものです。<br>
+これで他のこれらのエラーと同じようなエラーで苦しんでる人も少しはハッピーになれるかもしれません。</p>
+
+<pre><code class="language-python">ERROR: Command errored out with exit status 1:
+   command: /usr/bin/python3 /usr/lib/python3.9/site-packages/pip/_vendor/pep517/_in_process.py build_wheel /tmp/tmphtyy_2mz
+       cwd: /tmp/pip-install-ejpric_d/multidict_32c7ab8c36eb4ba599afa9775cb14c4d
+  Complete output (42 lines):
+  *********************
+  * Accelerated build *
+  *********************
+  running bdist_wheel
+  running build
+  running build_py
+  creating build
+  creating build/lib.linux-i686-3.9
+  creating build/lib.linux-i686-3.9/multidict
+  copying multidict/_multidict_py.py -&gt; build/lib.linux-i686-3.9/multidict
+  copying multidict/_abc.py -&gt; build/lib.linux-i686-3.9/multidict
+  copying multidict/__init__.py -&gt; build/lib.linux-i686-3.9/multidict
+  copying multidict/_multidict_base.py -&gt; build/lib.linux-i686-3.9/multidict
+  copying multidict/_compat.py -&gt; build/lib.linux-i686-3.9/multidict
+  running egg_info
+  warning: no previously-included files matching &#39;*.pyc&#39; found anywhere in distribution
+  warning: no previously-included files found matching &#39;multidict/_multidict.html&#39;
+  warning: no previously-included files found matching &#39;multidict/*.so&#39;
+  warning: no previously-included files found matching &#39;multidict/*.pyd&#39;
+  warning: no previously-included files found matching &#39;multidict/*.pyd&#39;
+  no previously-included directories found matching &#39;docs/_build&#39;
+  writing manifest file &#39;multidict.egg-info/SOURCES.txt&#39;
+  copying multidict/__init__.pyi -&gt; build/lib.linux-i686-3.9/multidict
+  copying multidict/_multidict.c -&gt; build/lib.linux-i686-3.9/multidict
+  copying multidict/py.typed -&gt; build/lib.linux-i686-3.9/multidict
+  creating build/lib.linux-i686-3.9/multidict/_multilib
+  copying multidict/_multilib/defs.h -&gt; build/lib.linux-i686-3.9/multidict/_multilib
+  copying multidict/_multilib/dict.h -&gt; build/lib.linux-i686-3.9/multidict/_multilib
+  copying multidict/_multilib/istr.h -&gt; build/lib.linux-i686-3.9/multidict/_multilib
+  copying multidict/_multilib/iter.h -&gt; build/lib.linux-i686-3.9/multidict/_multilib
+  copying multidict/_multilib/pair_list.h -&gt; build/lib.linux-i686-3.9/multidict/_multilib
+  copying multidict/_multilib/views.h -&gt; build/lib.linux-i686-3.9/multidict/_multilib
+  running build_ext
+  creating build/temp.linux-i686-3.9
+  creating build/temp.linux-i686-3.9/multidict
+  gcc -Wno-unused-result -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -fomit-frame-pointer -g -fno-semantic-interposition -fomit-frame-pointer -g -fno-semantic-interposition -fomit-frame-pointer -g -fno-semantic-interposition -DTHREAD_STACK_SIZE=0x100000 -fPIC -I/usr/include/python3.9 -c multidict/_multidict.c -o build/temp.linux-i686-3.9/multidict/_multidict.o -O2 -std=c99 -Wall -Wsign-compare -Wconversion -fno-strict-aliasing -pedantic
+  In file included from multidict/_multidict.c:1:
+  /usr/include/python3.9/Python.h:11:10: fatal error: limits.h: No such file or directory
+     11 | #include &lt;limits.h&gt;
+        |          ^~~~~~~~~~
+  compilation terminated.
+  error: command &#39;/usr/bin/gcc&#39; failed with exit code 1
+  ----------------------------------------
+  ERROR: Failed building wheel for multidict
+ERROR: Could not build wheels for yarl, multidict which use PEP 517 and cannot be installed directly
+</code></pre>
+</div></div>
+    </div>
+  </body>
+</html>

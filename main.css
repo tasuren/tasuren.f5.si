@@ -2,16 +2,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&family=Yomogi&display=swap');
 
+/* リセット */
 * { padding-inline-start: 0; }
 h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
 
-.background-for-text {
-  background-color: rgba(13, 0, 21, 0.55);
-  margin: 0 2%;
-  border-radius: 15px;
-  padding: 0.8vw 1.5vw;
-}
 
+/* 一般 */
 body {
   padding: 0; margin: 0;
   font-family: 'Yomogi', cursive;
@@ -21,40 +17,59 @@ body {
   list-style-position: inside;
 }
 ul { padding-inline-start: 1%; }
+:root { color-scheme: dark; }
 
-.container { margin: 3%; }
+.container { margin: 3vh 2vw; }
+.background-for-text {
+  /* 文章の後ろに黒い背景を入れる */
+  background-color: rgba(13, 0, 21, 0.55);
+  margin: 0 2%;
+  border-radius: 15px;
+  padding: 0.8vw 1.5vw;
+}
+
 
 /* メニュー */
-.title { font-weight: bold; font-size: 50px; }
+#title { font-weight: bold; text-align: center; }
 nav { padding: 0.2%; }
-nav ul { margin: 1%; list-style: none; font-size: 3vw; }
+nav ul { margin: 1%; list-style: none; }
 .text-right { text-align: right; }
 
-/* メイン */
-.content { font-size: 2vw; }
+/*  内容部分 */
 code {
   /* ソースコードのハイライトの背景 */
   background-color: #0f2350;
   border-radius: 0.4vh;
-  padding: 0 0.3vw;
-  font-family: 'Kosugi', sans-serif;
-  font-family: 'Roboto Mono', monospace;
+  padding: 0 0.5vw;
   font-family: 'Source Code Pro', monospace;
 }
 
-a { font-weight: bold; }
+/* ウェブページの一番上の`Last updated`の右寄せ等 */
+.left, .right { display: inline-block; }
+.left { margin-right: auto; }
+.frame { display: flex; }
+
+/* 画像サイズを適切なものにする。 */
+img { max-width: 100%; height: auto; }
+
+/* リンクの色等を変更する。 */
+a { font-weight: bold; text-decoration: none; }
 a:link { color: #38a1db; }
 a:visited { color: #8491c3; }
 nav ul a:visited { color: #38a1db; }
 
+
 /* レスポンシブ */
 @media screen and (max-width: 959px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
-  .title { font-size: 11vw; }
-  nav ul { font-size: 7.5vw; }
-  .content { font-size: 5vw; }
-  .background-for-text { margin: 1vh; padding: 1vh 3vw; }
+  #title { font-size: 9.5vw; }
+  nav ul { font-size: 6vw; }
+  .content { font-size: 4.4vw; }
+  .background-for-text { margin: 0.4vh 0; padding: 1vh 2vw; }
+  pre code.hljs { padding: 1vh 2vw; font-size: 3.55vw; }
 
+  #last-updated { font-size: 4vw; }
+  #back { margin-top: auto; margin-bottom: auto; }
 
   .pc-only { display: none; }
 }
@@ -65,18 +80,26 @@ nav ul a:visited { color: #38a1db; }
     display: flex;
     justify-content: space-between;
   }
-  .title { font-size: 3.35vw; }
-  nav { width: 30%; }
-  nav ul { font-size: 3vw; }
-  .content { width: 70%; font-size: 1.8vw; }
+  pre code.hljs { padding: 1vh 2vw; font-size: 1.3vw; }
 
   .sp-only { display: none; }
 }
 
-@media screen and (min-width: 1679px) {
-  /* PC向け */
-  .title { font-size: 2.35vw; }
+@media screen and (min-width: 960px) and (max-width: 1678px) {
+  /* タブレット向け */
+  #title { font-size: 2.75vw; }
   nav { width: 25%; }
   nav ul { font-size: 2vw; }
-  .content { width: 75%; font-size: 1.35vw; }
+  .content { width: 75%; font-size: 1.55vw; }
+}
+
+@media screen and (min-width: 1679px) {
+  /* PC向け */
+  .container { width: 80%; margin: 3vh auto; }
+  #title { font-size: 1.75vw; }
+  nav { width: 20%; }
+  nav ul { font-size: 1.4vw; }
+  .content { width: 80%; font-size: 1vw; }
+
+  pre code.hljs { padding: 1vh 2vw; font-size: 0.8vw; }
 }

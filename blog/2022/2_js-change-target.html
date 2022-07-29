@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja" theme="dark">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>JavaScriptのaタグのtargetを変更する。</title>
+    <meta name="description" content="JavaScriptのaタグのtargetを、リンクが外部サイトの場合のみ自動で`_blank`にするプログラムについて書かれているページです。">
+    <meta name="author" content="tasuren">
+    <meta name="theme-color" content="#0d0015">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
+    <!-- Assets -->
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/phd.min.css" integrity="sha512-VtA+ZaSvst0+aJz2Of6AODkGr/wseyNc4u/sq7QP4u187k86dCnjXv6G4L6GOAzQSYyHZ3/aeyPIpukjmLMRiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="/main.css?last_updated=1659070232.0985641">
+    <script src="/main.js"></script>
+    <script>
+      // 外部リンクを`target=_blank`にして新しいタブで開くようにする。
+      window.onload = function () {
+        let url;
+        for (element of document.getElementsByTagName("a")) {
+          url = element.getAttribute("href");
+          if (!url.startsWith(window.location.origin) && url.startsWith("http"))
+            element.setAttribute("target", "_blank");
+        };
+      };
+    </script>
+    <!-- Other -->
+    
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="background-for-text">
+          <div id="title">tasurenの部屋</div>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile.html">Profile</a></li>
+            <li><a href="/downloads">Downloads</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="content"><div class="background-for-text"><div class="frame"><div class="left" id="back"><a href="/blog/2022">戻る</a></div><div class="right" id="last-updated"><em>Last updated:<br class="sp-only"> 2022-07-29 04:50:12</em></div></div><hr>
+<h1>JavaScriptのaタグのtargetを変更する。</h1><p>このウェブサイトの開発中にとあることに気づいた。<br>
+というのも、リンクを開くと同じタブで開かれてしまいとても不便だということ。<br>
+いや同じウェブサイトのリンクならいいんだけども、外部リンクの場合は新しいタブで開いてほしい。<br>
+外部リンクの場合は、大抵の人が別のタブにしておいて、本来のウェブサイトを見ながらその外部サイトのタブを見るという感じにするだろう。(実際僕のやり方はこれだ。)<br>
+そのため、外部リンクは新しいタブで自動で開いてくれればとても良い。<br>
+てことで、JavaScriptを使用してこれを自動でやるようにしたいと思い、以下のコードを作成した。</p>
+
+<pre><code class="language-javascript">window.onload = function () {
+  let url;
+  for (element of document.getElementsByTagName(&quot;a&quot;)) {
+    url = element.getAttribute(&quot;href&quot;);
+    if (!url.startsWith(window.location.origin) &amp;&amp; url.startsWith(&quot;http&quot;))
+      element.setAttribute(&quot;target&quot;, &quot;_blank&quot;);
+  };
+};
+</code></pre>
+
+<h2>プログラム内容</h2>
+
+<p>まず最初に<code>for</code>で一つづつaタグの要素を取り出す。<br>
+その後、URLがウェブサイトのリンクではないかつURLが<code>http</code>から始まるなら、そのaタグに<code>target</code>という属性を付けて、<code>_blank</code>をその属性に入れている。</p>
+
+<h2>はまったこと</h2>
+
+<p>最初になぜか要素が取得できなくて少しハマったが、調べたところすぐ解決した。<br>
+まだHTMLの読み込みが終わっていない状態でJavaScriptが実行されるせいで要素が取得できていなかった。<br>
+これは、<code>window.onload</code>という読み込み終了時に呼ばれる属性に、aタグの更新を行う関数を入れることで解決した。<br>
+これで読み込み終了時にaタグの更新を行う関数が実行されるようになるという。</p>
+</div></div>
+    </div>
+  </body>
+</html>
