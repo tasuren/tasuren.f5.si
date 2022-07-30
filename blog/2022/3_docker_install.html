@@ -14,7 +14,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
 
-    <link rel="stylesheet" href="/main.css?last_updated=1659156590.9923232">
+    <link rel="stylesheet" href="/main.css?last_updated=1659157399.1924577">
     <script src="/main.js"></script>
     <script>
       // 外部リンクを`target=_blank`にして新しいタブで開くようにする。
@@ -43,7 +43,7 @@
           </ul>
         </div>
       </nav>
-      <div class="content"><div class="background-for-text"><div class="frame"><div class="left" id="back"><a href="/blog/2022">戻る</a></div><div class="right" id="last-updated"><em>Last updated:<br class="sp-only"> 2022-07-30 04:49:39</em></div></div><hr>
+      <div class="content"><div class="background-for-text"><div class="frame"><div class="left" id="back"><a href="/blog/2022">戻る</a></div><div class="right" id="last-updated"><em>Last updated:<br class="sp-only"> 2022-07-30 05:03:06</em></div></div><hr>
 <h1>Dockerのインストールでapt_pkgが見つからない問題</h1><p>Dockerを自分のUbuntu Serverにインストールしようとしたところよくわからんエラーで詰まった。<br>
 その時の対処法を同じことになっている他の人のためにここに書き記す。<br>
 注意：ここにあることを行なって何か損害が起きても自己責任とします。</p>
@@ -75,7 +75,7 @@ __init__.pyi
 
 <p>一応あるといえばあった。<br>
 それなのになぜモジュールが見つからないというエラーが起きてしまうのだろうか...<br>
-そこで色々ググってみたところ、この<code>apt_pkg.cpython-38-x86_64-linux-gnu.so</code>に似たものを見つけたがどれも一文字違う名前だった。<br>
+そこで色々ググってみたところ、この<code>apt_pkg.cpython-38-x86_64-linux-gnu.so</code>に似たものを見つけたが、どれも一文字違う名前だった。<br>
 それが以下である。<br>
 <code>apt_pkg.cpython-38m-x86_64-linux-gnu.so</code><br>
 どこが違うんだよって感じだけどよくみてみてください。  </p>
