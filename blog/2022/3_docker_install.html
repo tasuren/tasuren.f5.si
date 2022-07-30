@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja" theme="dark">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>Dockerのインストールでapt_pkgが見つからない問題</title>
+    <meta name="description" content="Dockerのインストール時に`apt_pkg`というモジュールが見つからないというエラーが発生する問題を解決した話です。">
+    <meta name="author" content="tasuren">
+    <meta name="theme-color" content="#0d0015">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
+    <!-- Assets -->
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/phd.min.css" integrity="sha512-VtA+ZaSvst0+aJz2Of6AODkGr/wseyNc4u/sq7QP4u187k86dCnjXv6G4L6GOAzQSYyHZ3/aeyPIpukjmLMRiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="/main.css?last_updated=1659156590.9923232">
+    <script src="/main.js"></script>
+    <script>
+      // 外部リンクを`target=_blank`にして新しいタブで開くようにする。
+      window.onload = function () {
+        let url;
+        for (element of document.getElementsByTagName("a")) {
+          url = element.getAttribute("href");
+          if (!url.startsWith(window.location.origin) && url.startsWith("http"))
+            element.setAttribute("target", "_blank");
+        };
+      };
+    </script>
+    <!-- Other -->
+    
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="background-for-text">
+          <div id="title">tasurenの部屋</div>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile.html">Profile</a></li>
+            <li><a href="/downloads">Downloads</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="content"><div class="background-for-text"><div class="frame"><div class="left" id="back"><a href="/blog/2022">戻る</a></div><div class="right" id="last-updated"><em>Last updated:<br class="sp-only"> 2022-07-30 04:49:39</em></div></div><hr>
+<h1>Dockerのインストールでapt_pkgが見つからない問題</h1><p>Dockerを自分のUbuntu Serverにインストールしようとしたところよくわからんエラーで詰まった。<br>
+その時の対処法を同じことになっている他の人のためにここに書き記す。<br>
+注意：ここにあることを行なって何か損害が起きても自己責任とします。</p>
+
+<p>まず最初にDockerのリポジトリを追加する際に以下のPythonのエラーがでた。</p>
+
+<pre><code class="language-shell">$ sudo add-apt-repository \                                 
+    &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable&quot;
+Traceback (most recent call last):
+  File &quot;/usr/bin/add-apt-repository&quot;, line 12, in &lt;module&gt;
+    from softwareproperties.SoftwareProperties import SoftwareProperties, shortcut_handler
+  File &quot;/usr/lib/python3/dist-packages/softwareproperties/SoftwareProperties.py&quot;, line 28, in &lt;module&gt;
+    import apt_pkg
+ModuleNotFoundError: No module named &#39;apt_pkg&#39;
+</code></pre>
+
+<p>よくわからん...<br>
+とりあえず、モジュールが見つからないということなので、<code>dist-packages</code>の中を見てみる。</p>
+
+<pre><code class="language-shell">$ cd /usr/lib/python3/dist-packages
+$ ls apt_pkg*
+apt_pkg.cpython-38-x86_64-linux-gnu.so
+
+apt_pkg-stubs:
+__init__.pyi
+</code></pre>
+
+<p>一応あるといえばあった。<br>
+それなのになぜモジュールが見つからないというエラーが起きてしまうのだろうか...<br>
+そこで色々ググってみたところ、この<code>apt_pkg.cpython-38-x86_64-linux-gnu.so</code>に似たものを見つけたがどれも一文字違う名前だった。<br>
+それが以下である。<br>
+<code>apt_pkg.cpython-38m-x86_64-linux-gnu.so</code><br>
+どこが違うんだよって感じだけどよくみてみてください。  </p>
+
+<blockquote>
+<p><code>38m</code></p>
+</blockquote>
+
+<p><code>m</code>が自分のにはありません。<br>
+もしやと思い名前に<code>m</code>を入れてみる。</p>
+
+<pre><code class="language-shell">$ sudo mv apt_pkg.cpython-38-x86_64-linux-gnu.so apt_pkg.cpython-38m-x86_64-linux-gnu.so
+</code></pre>
+
+<p>すると今度は別のエラーがでてしまった。</p>
+
+<pre><code class="language-shell">$ sudo add-apt-repository \                              
+    &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable&quot;
+Traceback (most recent call last):
+  File &quot;/usr/bin/add-apt-repository&quot;, line 12, in &lt;module&gt;
+    from softwareproperties.SoftwareProperties import SoftwareProperties, shortcut_handler
+  File &quot;/usr/lib/python3/dist-packages/softwareproperties/SoftwareProperties.py&quot;, line 68, in &lt;module&gt;
+    from gi.repository import Gio
+  File &quot;/usr/lib/python3/dist-packages/gi/__init__.py&quot;, line 42, in &lt;module&gt;
+    from . import _gi
+ImportError: cannot import name &#39;_gi&#39; from partially initialized module &#39;gi&#39; (most likely due to a circular import) (/usr/lib/python3/dist-packages/gi/__init__.py)
+</code></pre>
+
+<p>giが見つからないってなんやねん！<br>
+色々調べたところ複数のバージョンのPythonが入っているとこうなるらしい。<br>
+最近Pythonを複数バージョン入れるときにはpyenvを使うようにしていたが、Dockerをインストールしようとしているマシンにはpyenvを入れたことがなく、昔にPython3.8からPython3.9に手動でアップグレードした気がする。<br>
+恐らく、元のPython3.8とPython3.9が競合しているのだろう。<br>
+一体エラーが起きる時に使用しているPythonはどのバージョンのPythonなのだろうか。<br>
+エラーが起きているファイルをnanoで開き、エラー箇所の手前に<code>print(__import__(&quot;sys&quot;).executable)</code>を置いて、どこにあるPythonを実行しているのかを表示するようにした。<br>
+すると、<code>/usr/bin/python3</code>と表示された。<code>/usr/bin/python3</code>と実行するとPython3.9.5が起動した。<br>
+となると、先ほどの<code>m</code>が名前になかったファイルは<code>cpython-38</code>とあったことから、これはPython3.8で実行されるべきなのだろう。<br>
+(そもそもUbuntuに元から入ってたのがPython3.8な気がするし。)<br>
+つまり、<code>/usr/bin/python3</code>からpython3.8が起動するようにすればうまくいくのではないだろうか。<br>
+なお、<code>python3.8</code>とコマンドラインで実行するとPython3.8が起動する。<br>
+てことで、<code>python3.8</code>がどこにあるのかを調べて、それをその<code>/usr/bin/python3</code>にコピーした。</p>
+
+<pre><code class="language-shell">$ which python3.8
+/usr/bin/python3.8
+$ sudo cp /usr/bin/python3.8 /usr/bin/python3
+</code></pre>
+
+<p>すると、やっとエラーもなく実行が成功した！</p>
+
+<pre><code class="language-shell">$ sudo add-apt-repository \            
+    &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable&quot;
+Get:1 https://download.docker.com/linux/ubuntu focal InRelease [57.7 kB]
+Hit:2 http://jp.archive.ubuntu.com/ubuntu focal InRelease                                             
+Get:3 http://jp.archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
+Get:4 https://download.docker.com/linux/ubuntu focal/stable amd64 Packages [17.6 kB]
+Get:5 http://jp.archive.ubuntu.com/ubuntu focal-backports InRelease [108 kB]                                    
+Get:6 http://jp.archive.ubuntu.com/ubuntu focal-security InRelease [114 kB]   
+Get:7 http://jp.archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [1,992 kB]
+Get:8 https://dlm.mariadb.com/repo/mariadb-server/10.6/repo/ubuntu focal InRelease [4,717 B]
+Get:9 http://jp.archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [926 kB]                
+Get:11 https://dlm.mariadb.com/repo/maxscale/latest/apt focal InRelease [6,384 B]                    
+Hit:10 https://downloads.mariadb.com/Tools/ubuntu focal InRelease                                                 
+Fetched 3,340 kB in 1s (3,211 kB/s)
+Reading package lists... Done
+</code></pre>
+
+<p>全く、Python3.9を二個インストールした昔の僕にはpyenvの存在を知ってもらいたいですね。<br>
+みなさんもpyenv等を使ってインストールしましょう。()<br>
+とりあえず無事解決した。</p>
+</div></div>
+    </div>
+  </body>
+</html>
